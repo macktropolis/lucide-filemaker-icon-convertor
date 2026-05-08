@@ -245,6 +245,17 @@ function getColor() {
   return v;
 }
 
+function inferIconName(svg) {
+  const cls = svg.getAttribute('class') || '';
+  const match = cls.match(/lucide-([a-z0-9-]+)/);
+  if (match) return match[1];
+  const title = svg.querySelector('title');
+  if (title && title.textContent.trim()) return title.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+  const label = svg.getAttribute('aria-label');
+  if (label) return label.toLowerCase().replace(/\s+/g, '-');
+  return 'icon';
+}
+
 function convert() {
   const raw = document.getElementById('svg-input').value.trim();
   if (!raw) return;
@@ -255,6 +266,9 @@ function convert() {
 
   const svg = doc.querySelector('svg');
   if (!svg) return;
+
+  const inferredName = inferIconName(svg);
+  document.getElementById('filename').value = inferredName;
 
   const report = {
     hadWidth: svg.hasAttribute('width'),
