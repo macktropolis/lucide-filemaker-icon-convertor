@@ -345,10 +345,8 @@ function downloadSVG() {
   const val = document.getElementById('svg-output').value;
   if (!val) return;
   const name = (document.getElementById('filename').value.trim() || 'icon') + '.svg';
-  const blob = new Blob([val], { type: 'image/svg+xml' });
-  const url = URL.createObjectURL(blob);
+  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(val);
   const a = document.createElement('a'); a.href = url; a.download = name; a.click();
-  URL.revokeObjectURL(url);
 }
 
 function copyOutput() {
