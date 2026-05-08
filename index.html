@@ -246,14 +246,14 @@ function getColor() {
 }
 
 function inferIconName(svg) {
+  let name = '';
   const cls = svg.getAttribute('class') || '';
   const match = cls.match(/lucide-([a-z0-9-]+)/);
-  if (match) return match[1];
-  const title = svg.querySelector('title');
-  if (title && title.textContent.trim()) return title.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-  const label = svg.getAttribute('aria-label');
-  if (label) return label.toLowerCase().replace(/\s+/g, '-');
-  return 'icon';
+  if (match) name = match[1];
+  if (!name) { const title = svg.querySelector('title'); if (title && title.textContent.trim()) name = title.textContent.trim().toLowerCase().replace(/\s+/g, '-'); }
+  if (!name) { const label = svg.getAttribute('aria-label'); if (label) name = label.toLowerCase().replace(/\s+/g, '-'); }
+  if (!name) return 'icon';
+  return name.replace(/-icon$/, '');
 }
 
 function convert() {
