@@ -90,6 +90,8 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); font-si
 .mc-chip:hover { border-color:var(--blue-dim); color:var(--text); }
 .mc-chip.active { background:var(--blue-faint); border-color:var(--blue-dim); color:var(--blue); }
 
+.mc-instructions { font-size:11px; color:var(--text-dim); line-height:1.7; }
+.mc-instructions strong { color:var(--text); font-weight:700; }
 .mc-report { display:flex; flex-direction:column; gap:14px; }
 .mc-section-label {
   font-family:var(--display); font-size:10px; font-weight:500; letter-spacing:0.14em;
@@ -124,15 +126,15 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); font-si
 </style>
 
 <div class="shell">
-  <h2 class="sr-only">Lucide SVG to FileMaker converter — Mission Control</h2>
-
   <div class="mc-header">
-    <span class="mc-wordmark">Mission Control</span>
-    <span class="mc-tool-name">Lucide → FileMaker SVG</span>
+    <span class="mc-wordmark">Lucide → FileMaker</span>
+    <span class="mc-tool-name">SVG Converter</span>
     <span class="mc-status-pill">ONLINE</span>
   </div>
 
   <div class="mc-body">
+
+    <p class="mc-instructions">Paste a Lucide SVG icon into the input panel, choose your size and stroke color, then hit <strong>Convert</strong>. The output is a FileMaker-ready SVG you can copy or download.</p>
 
     <div class="mc-row">
       <div class="mc-panel">
