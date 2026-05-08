@@ -1,0 +1,370 @@
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Chakra+Petch:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --blue:#1E90FF; --blue-dim:#1E90FF44; --blue-faint:#1E90FF11; --blue-glow:#1E90FF66;
+  --bg:#07090f; --bg-panel:#0c1018; --bg-card:#0f1520;
+  --border:#1a2438; --border-lit:#1E90FF33;
+  --text:#c8d8f0; --text-dim:#5a7090; --text-faint:#2a3a50;
+  --success:#00e5a0; --warn:#f0b429; --danger:#ff4d6a;
+  --mono:'Space Mono',monospace; --display:'Chakra Petch',sans-serif;
+}
+body { background:var(--bg); color:var(--text); font-family:var(--mono); font-size:12px; line-height:1.6; }
+.shell { position:relative; min-height:100%; padding:0 0 24px; }
+.shell::before {
+  content:''; position:absolute; inset:0; pointer-events:none; z-index:10;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+}
+.mc-header {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:14px 20px; border-bottom:1px solid var(--border-lit); background:var(--bg-panel);
+  position:relative; overflow:hidden;
+}
+.mc-header::after {
+  content:''; position:absolute; bottom:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue-glow),transparent);
+}
+.mc-wordmark { font-family:var(--display); font-size:11px; font-weight:600; letter-spacing:0.18em; color:var(--blue); text-transform:uppercase; }
+.mc-tool-name { font-family:var(--display); font-size:13px; font-weight:500; letter-spacing:0.06em; color:var(--text); }
+.mc-status-pill { display:flex; align-items:center; gap:6px; font-size:10px; color:var(--text-dim); letter-spacing:0.08em; }
+.mc-status-pill::before {
+  content:''; display:block; width:6px; height:6px; border-radius:50%;
+  background:var(--success); box-shadow:0 0 6px var(--success); animation:blink 2.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.mc-body { padding:20px; display:flex; flex-direction:column; gap:16px; }
+.mc-panel { background:var(--bg-panel); border:1px solid var(--border); border-radius:2px; overflow:hidden; position:relative; }
+.mc-panel::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--blue-dim),transparent);
+}
+.mc-panel-head { display:flex; align-items:center; gap:8px; padding:8px 14px; border-bottom:1px solid var(--border); background:var(--bg-card); }
+.mc-panel-head-label { font-family:var(--display); font-size:10px; font-weight:500; letter-spacing:0.12em; color:var(--text-dim); text-transform:uppercase; flex:1; }
+.mc-panel-dot { width:5px; height:5px; border-radius:50%; background:var(--blue); box-shadow:0 0 4px var(--blue); flex-shrink:0; }
+.mc-textarea {
+  width:100%; height:180px; resize:vertical;
+  background:var(--bg); color:var(--text); font-family:var(--mono); font-size:11px; line-height:1.7;
+  padding:12px 14px; border:none; outline:none; display:block;
+}
+.mc-textarea::placeholder { color:var(--text-faint); }
+.mc-textarea:focus { background:#08101a; }
+.mc-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+.mc-actions {
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  padding:12px 14px; background:var(--bg-panel); border:1px solid var(--border); border-radius:2px;
+}
+.mc-divider { width:1px; height:20px; background:var(--border); margin:0 4px; }
+.mc-spacer { flex:1; }
+.mc-btn { font-family:var(--display); font-size:11px; font-weight:500; letter-spacing:0.06em; padding:6px 14px; border-radius:2px; cursor:pointer; transition:all 0.15s; border:none; outline:none; }
+.mc-btn-primary { background:var(--blue); color:#000; }
+.mc-btn-primary:hover { background:#3da8ff; box-shadow:0 0 12px var(--blue-glow); }
+.mc-btn-primary:active { transform:scale(0.97); }
+.mc-btn-ghost { background:transparent; color:var(--blue); border:1px solid var(--border-lit); }
+.mc-btn-ghost:hover { background:var(--blue-faint); border-color:var(--blue-dim); }
+.mc-btn-ghost:active { transform:scale(0.97); }
+.mc-btn-ghost:disabled { color:var(--text-faint); border-color:var(--border); cursor:default; }
+.mc-btn-ghost:disabled:hover { background:transparent; }
+.mc-btn-danger { background:transparent; color:var(--danger); border:1px solid #ff4d6a33; }
+.mc-btn-danger:hover { background:#ff4d6a11; }
+.mc-btn-danger:active { transform:scale(0.97); }
+.mc-select-row { display:flex; align-items:center; gap:8px; }
+.mc-label-sm { font-family:var(--display); font-size:10px; letter-spacing:0.1em; color:var(--text-dim); white-space:nowrap; text-transform:uppercase; }
+.mc-select, .mc-input-sm {
+  font-family:var(--mono); font-size:11px; padding:5px 8px;
+  background:var(--bg-card); color:var(--text); border:1px solid var(--border); border-radius:2px; outline:none;
+}
+.mc-select:focus, .mc-input-sm:focus { border-color:var(--blue-dim); box-shadow:0 0 0 2px var(--blue-faint); }
+.mc-input-sm { width:88px; }
+
+/* Size chips */
+.mc-size-chips { display:flex; gap:4px; align-items:center; }
+.mc-chip {
+  font-family:var(--display); font-size:10px; letter-spacing:0.06em;
+  padding:4px 10px; border-radius:2px; cursor:pointer; transition:all 0.15s;
+  background:transparent; color:var(--text-dim); border:1px solid var(--border);
+}
+.mc-chip:hover { border-color:var(--blue-dim); color:var(--text); }
+.mc-chip.active { background:var(--blue-faint); border-color:var(--blue-dim); color:var(--blue); }
+
+.mc-report { display:flex; flex-direction:column; gap:14px; }
+.mc-section-label {
+  font-family:var(--display); font-size:10px; font-weight:500; letter-spacing:0.14em;
+  color:var(--text-dim); text-transform:uppercase; display:flex; align-items:center; gap:10px;
+}
+.mc-section-label::after { content:''; flex:1; height:1px; background:var(--border); }
+.mc-badges { display:flex; flex-wrap:wrap; gap:6px; }
+.mc-badge { font-family:var(--mono); font-size:10px; padding:3px 9px; border-radius:2px; letter-spacing:0.04em; }
+.mc-badge-ok { background:#00e5a011; color:var(--success); border:1px solid #00e5a033; }
+.mc-badge-warn { background:#f0b42911; color:var(--warn); border:1px solid #f0b42933; }
+.mc-detail-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); }
+.mc-detail-card { background:var(--bg-panel); padding:10px 12px; }
+.mc-detail-card .dk { font-family:var(--display); font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--text-dim); margin-bottom:3px; }
+.mc-detail-card .dv { font-family:var(--mono); font-size:11px; color:var(--blue); }
+.mc-filename-row { display:flex; align-items:center; gap:8px; }
+.mc-filename-input {
+  font-family:var(--mono); font-size:11px; padding:6px 10px; flex:1;
+  background:var(--bg-card); color:var(--text); border:1px solid var(--border); border-radius:2px; outline:none;
+}
+.mc-filename-input:focus { border-color:var(--blue-dim); box-shadow:0 0 0 2px var(--blue-faint); }
+.mc-ext { font-size:11px; color:var(--text-dim); font-family:var(--mono); }
+.mc-preview-row {
+  display:flex; align-items:center; justify-content:center; gap:28px; padding:20px;
+  background:var(--bg-card); border:1px solid var(--border); border-radius:2px;
+}
+.mc-swatch { display:flex; flex-direction:column; align-items:center; gap:8px; }
+.mc-swatch-label { font-size:10px; color:var(--text-dim); letter-spacing:0.06em; }
+.mc-swatch-on-light { background:#e8edf5; border-radius:2px; padding:12px; color:#111; }
+.mc-swatch-on-dark  { background:#1a2030; border-radius:2px; padding:12px; color:#fff; border:1px solid var(--border); }
+.mc-swatch-on-blue  { background:var(--blue); border-radius:2px; padding:12px; color:#000; }
+.mc-preview-note { font-size:10px; color:var(--text-faint); font-style:italic; text-align:center; }
+</style>
+
+<div class="shell">
+  <h2 class="sr-only">Lucide SVG to FileMaker converter — Mission Control</h2>
+
+  <div class="mc-header">
+    <span class="mc-wordmark">Mission Control</span>
+    <span class="mc-tool-name">Lucide → FileMaker SVG</span>
+    <span class="mc-status-pill">ONLINE</span>
+  </div>
+
+  <div class="mc-body">
+
+    <div class="mc-row">
+      <div class="mc-panel">
+        <div class="mc-panel-head">
+          <span class="mc-panel-dot"></span>
+          <span class="mc-panel-head-label">Input — Lucide SVG</span>
+        </div>
+        <textarea class="mc-textarea" id="svg-input" spellcheck="false" placeholder="<svg xmlns=&quot;http://www.w3.org/2000/svg&quot; width=&quot;24&quot; height=&quot;24&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; ...>
+  <path d=&quot;...&quot;/>
+</svg>"></textarea>
+      </div>
+      <div class="mc-panel">
+        <div class="mc-panel-head">
+          <span class="mc-panel-dot"></span>
+          <span class="mc-panel-head-label">Output — FileMaker-ready SVG</span>
+        </div>
+        <textarea class="mc-textarea" id="svg-output" spellcheck="false" readonly placeholder="// converted output will appear here"></textarea>
+      </div>
+    </div>
+
+    <div class="mc-actions">
+      <button class="mc-btn mc-btn-primary" onclick="convert()">Convert</button>
+      <button class="mc-btn mc-btn-ghost" id="copy-btn" onclick="copyOutput()" disabled>Copy SVG</button>
+      <button class="mc-btn mc-btn-ghost" id="dl-btn" onclick="downloadSVG()" disabled>Download .svg</button>
+      <div class="mc-divider"></div>
+      <button class="mc-btn mc-btn-danger" onclick="clearAll()">Clear</button>
+      <div class="mc-spacer"></div>
+
+      <div class="mc-select-row">
+        <span class="mc-label-sm">Size</span>
+        <div class="mc-size-chips" id="size-chips">
+          <button class="mc-chip" onclick="setSize(36)">36</button>
+          <button class="mc-chip active" onclick="setSize(48)">48</button>
+          <button class="mc-chip" onclick="setSize(64)">64</button>
+          <button class="mc-chip" onclick="setSize(96)">96</button>
+        </div>
+      </div>
+      <div class="mc-divider"></div>
+      <div class="mc-select-row">
+        <span class="mc-label-sm">Stroke</span>
+        <select class="mc-select" id="color-override" onchange="toggleCustom()">
+          <option value="currentColor">currentColor</option>
+          <option value="#FFFFFF">White #FFF</option>
+          <option value="#000000">Black #000</option>
+          <option value="#1E90FF">Dodger Blue #1E90FF</option>
+          <option value="#7034CA">Purple #7034CA</option>
+          <option value="custom">Custom hex…</option>
+        </select>
+        <input type="text" class="mc-input-sm" id="custom-color" placeholder="#RRGGBB" style="display:none;" />
+      </div>
+    </div>
+
+    <div id="report-area" style="display:none;">
+      <div class="mc-report">
+        <p class="mc-section-label">Conversion report</p>
+        <div class="mc-badges" id="badges"></div>
+        <div class="mc-detail-grid" id="detail-grid"></div>
+        <p class="mc-section-label">Filename</p>
+        <div class="mc-filename-row">
+          <input type="text" class="mc-filename-input" id="filename" value="icon" spellcheck="false" />
+          <span class="mc-ext">.svg</span>
+        </div>
+        <p class="mc-section-label">Preview</p>
+        <div class="mc-preview-row">
+          <div class="mc-swatch">
+            <div class="mc-swatch-on-light" id="prev-light-bg"></div>
+            <span class="mc-swatch-label">on light</span>
+          </div>
+          <div class="mc-swatch">
+            <div class="mc-swatch-on-dark" id="prev-dark-bg"></div>
+            <span class="mc-swatch-label">on dark</span>
+          </div>
+          <div class="mc-swatch">
+            <div class="mc-swatch-on-blue" id="prev-blue-bg"></div>
+            <span class="mc-swatch-label">on blue</span>
+          </div>
+        </div>
+        <p class="mc-preview-note">currentColor resolves from the button's text style in FileMaker.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+let selectedSize = 48;
+
+function setSize(n) {
+  selectedSize = n;
+  document.querySelectorAll('.mc-chip').forEach(c => {
+    c.classList.toggle('active', parseInt(c.textContent) === n);
+  });
+}
+
+function toggleCustom() {
+  document.getElementById('custom-color').style.display =
+    document.getElementById('color-override').value === 'custom' ? 'inline-block' : 'none';
+}
+
+function getColor() {
+  const v = document.getElementById('color-override').value;
+  if (v === 'custom') {
+    const c = document.getElementById('custom-color').value.trim();
+    return c.startsWith('#') ? c : '#' + c;
+  }
+  return v;
+}
+
+function convert() {
+  const raw = document.getElementById('svg-input').value.trim();
+  if (!raw) return;
+
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(raw, 'image/svg+xml');
+  if (doc.querySelector('parsererror')) return;
+
+  const svg = doc.querySelector('svg');
+  if (!svg) return;
+
+  const report = {
+    hadWidth: svg.hasAttribute('width'),
+    hadHeight: svg.hasAttribute('height'),
+  };
+
+  // Set explicit dimensions — FileMaker renders at intrinsic size
+  svg.setAttribute('width', selectedSize);
+  svg.setAttribute('height', selectedSize);
+
+  report.viewBox = svg.getAttribute('viewBox') || 'missing';
+
+  const color = getColor();
+  let removedStyles = 0, removedClasses = 0;
+
+  doc.querySelectorAll('style').forEach(el => { el.remove(); removedStyles++; });
+  doc.querySelectorAll('[class]').forEach(el => { el.removeAttribute('class'); removedClasses++; });
+  doc.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
+
+  if (svg.hasAttribute('stroke')) svg.setAttribute('stroke', color);
+  doc.querySelectorAll('[stroke]').forEach(el => el.setAttribute('stroke', color));
+  if (color !== 'currentColor') svg.setAttribute('stroke', color);
+
+  report.outputSize  = `${selectedSize}×${selectedSize}`;
+  report.strokeWidth = svg.getAttribute('stroke-width') || 'not on root';
+  report.strokeLinecap = svg.getAttribute('stroke-linecap') || 'not set';
+  report.strokeLinejoin = svg.getAttribute('stroke-linejoin') || 'not set';
+  report.removedStyles = removedStyles;
+  report.removedClasses = removedClasses;
+  report.color = color;
+
+  const serializer = new XMLSerializer();
+  let output = serializer.serializeToString(svg);
+  output = output.replace(/ xmlns:xlink="[^"]*"/g, '');
+  output = output.replace(/\s+/g, ' ').replace(/> </g, '>\n<').trim();
+
+  document.getElementById('svg-output').value = output;
+  document.getElementById('copy-btn').disabled = false;
+  document.getElementById('dl-btn').disabled = false;
+
+  renderReport(report);
+  renderPreview(output);
+}
+
+function renderReport(r) {
+  document.getElementById('report-area').style.display = 'block';
+  const badges = document.getElementById('badges');
+  badges.innerHTML = '';
+  [
+    [r.viewBox !== 'missing',         '✓ viewBox present',     '⚠ viewBox missing'],
+    [true,                             `✓ size set ${r.outputSize}`, ''],
+    [r.strokeWidth !== 'not on root', '✓ stroke-width found',  '⚠ stroke-width not on root'],
+    [r.removedStyles === 0,           '✓ no style blocks',     `⚠ ${r.removedStyles} style block(s) removed`],
+  ].forEach(([ok, pass, fail]) => {
+    const b = document.createElement('span');
+    b.className = 'mc-badge ' + (ok ? 'mc-badge-ok' : 'mc-badge-warn');
+    b.textContent = ok ? pass : fail;
+    badges.appendChild(b);
+  });
+
+  const grid = document.getElementById('detail-grid');
+  grid.innerHTML = '';
+  [
+    ['output size',  r.outputSize],
+    ['viewBox',      r.viewBox],
+    ['stroke color', r.color],
+    ['stroke-width', r.strokeWidth],
+    ['linecap',      r.strokeLinecap],
+    ['linejoin',     r.strokeLinejoin],
+  ].forEach(([k, v]) => {
+    grid.innerHTML += `<div class="mc-detail-card"><div class="dk">${k}</div><div class="dv">${v}</div></div>`;
+  });
+}
+
+function renderPreview(svgText) {
+  const sized = svgText.replace(/width="[^"]*"/, 'width="40"').replace(/height="[^"]*"/, 'height="40"');
+  [
+    ['prev-light-bg', '#111'],
+    ['prev-dark-bg',  '#fff'],
+    ['prev-blue-bg',  '#000'],
+  ].forEach(([id, color]) => {
+    const el = document.getElementById(id);
+    el.innerHTML = sized;
+    const inner = el.querySelector('svg');
+    if (inner) { inner.style.display = 'block'; inner.style.color = color; inner.style.stroke = color; }
+  });
+}
+
+function downloadSVG() {
+  const val = document.getElementById('svg-output').value;
+  if (!val) return;
+  const name = (document.getElementById('filename').value.trim() || 'icon') + '.svg';
+  const blob = new Blob([val], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+  URL.revokeObjectURL(url);
+}
+
+function copyOutput() {
+  const val = document.getElementById('svg-output').value;
+  if (!val) return;
+  navigator.clipboard.writeText(val).then(() => {
+    const btn = document.getElementById('copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = orig, 1500);
+  });
+}
+
+function clearAll() {
+  document.getElementById('svg-input').value = '';
+  document.getElementById('svg-output').value = '';
+  document.getElementById('copy-btn').disabled = true;
+  document.getElementById('dl-btn').disabled = true;
+  document.getElementById('report-area').style.display = 'none';
+}
+</script>
