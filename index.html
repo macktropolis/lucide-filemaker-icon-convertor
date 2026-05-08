@@ -161,6 +161,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); font-si
       <button class="mc-btn mc-btn-ghost" id="dl-btn" onclick="downloadSVG()" disabled>Download .svg</button>
       <div class="mc-divider"></div>
       <button class="mc-btn mc-btn-danger" onclick="clearAll()">Clear</button>
+      <button class="mc-btn mc-btn-ghost" onclick="location.reload()">Reset</button>
       <div class="mc-spacer"></div>
 
       <div class="mc-select-row">
@@ -196,6 +197,7 @@ body { background:var(--bg); color:var(--text); font-family:var(--mono); font-si
         <div class="mc-filename-row">
           <input type="text" class="mc-filename-input" id="filename" value="icon" spellcheck="false" />
           <span class="mc-ext">.svg</span>
+          <button class="mc-btn mc-btn-primary" id="dl-btn-inline" onclick="downloadSVG()" disabled>Download</button>
         </div>
         <p class="mc-section-label">Preview</p>
         <div class="mc-preview-row">
@@ -292,6 +294,7 @@ function convert() {
   document.getElementById('svg-output').value = output;
   document.getElementById('copy-btn').disabled = false;
   document.getElementById('dl-btn').disabled = false;
+  document.getElementById('dl-btn-inline').disabled = false;
 
   renderReport(report);
   renderPreview(output);
@@ -370,6 +373,7 @@ function clearAll() {
   document.getElementById('svg-output').value = '';
   document.getElementById('copy-btn').disabled = true;
   document.getElementById('dl-btn').disabled = true;
+  document.getElementById('dl-btn-inline').disabled = true;
   document.getElementById('report-area').style.display = 'none';
 }
 </script>
