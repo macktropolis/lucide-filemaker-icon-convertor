@@ -345,8 +345,13 @@ function downloadSVG() {
   const val = document.getElementById('svg-output').value;
   if (!val) return;
   const name = (document.getElementById('filename').value.trim() || 'icon') + '.svg';
-  const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(val);
-  const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+  const payload = JSON.stringify({ filename: name, svg: val });
+  if (typeof FileMaker !== 'undefined') {
+    FileMaker.PerformScript('Utility__ExportSVG', payload);
+  } else {
+    const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(val);
+    const a = document.createElement('a'); a.href = url; a.download = name; a.click();
+  }
 }
 
 function copyOutput() {
