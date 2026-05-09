@@ -293,10 +293,9 @@ function convert() {
   report.viewBox = svg.getAttribute('viewBox') || 'missing';
 
   const color = getColor();
-  let removedStyles = 0, removedClasses = 0;
+  let removedStyles = 0;
 
   doc.querySelectorAll('style').forEach(el => { el.remove(); removedStyles++; });
-  doc.querySelectorAll('[class]').forEach(el => { el.removeAttribute('class'); removedClasses++; });
   doc.querySelectorAll('[id]').forEach(el => el.removeAttribute('id'));
 
   if (svg.hasAttribute('stroke')) svg.setAttribute('stroke', color);
@@ -308,7 +307,6 @@ function convert() {
   report.strokeLinecap = svg.getAttribute('stroke-linecap') || 'not set';
   report.strokeLinejoin = svg.getAttribute('stroke-linejoin') || 'not set';
   report.removedStyles = removedStyles;
-  report.removedClasses = removedClasses;
   report.color = color;
 
   const serializer = new XMLSerializer();

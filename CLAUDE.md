@@ -10,7 +10,7 @@ A single-page SVG converter tool that transforms Lucide (and other) SVG icons in
 
 The entire app is a single `index.html` file — no build step, no dependencies, no bundler. It contains inline `<style>`, HTML markup, and a `<script>` block.
 
-**Conversion pipeline:** Parse input SVG → infer icon name from metadata → set explicit width/height (FileMaker requires intrinsic dimensions) → strip `<style>`, `class`, and `id` attributes → apply stroke color override → serialize back to string.
+**Conversion pipeline:** Parse input SVG → infer icon name from metadata → set explicit width/height (FileMaker requires intrinsic dimensions) → strip `<style>` and `id` attributes (class values are preserved) → apply stroke color override → serialize back to string.
 
 **FileMaker integration:** The page detects `typeof FileMaker !== 'undefined'` to determine if it's running inside a web viewer. When present:
 - **Download** calls `FileMaker.PerformScript('Utility__ExportSVG', payload)` with JSON `{filename, svg}` — FileMaker sets a global field (`_MainMenu::zzg__Text_r20`) and uses `Export Field Contents`.
